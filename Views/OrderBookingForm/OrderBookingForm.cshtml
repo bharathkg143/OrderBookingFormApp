@@ -1,0 +1,657 @@
+﻿@model SalesBookedData
+@{
+    Layout = "_LayoutOrderBookingForm";
+    ViewData["Title"] = "Order Booking Form";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+
+<style>
+    .form-container {
+        margin: 10px;
+        width: 100%;
+    }
+
+    .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .form-label {
+        margin-right: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        flex-basis: 140px;
+        flex-shrink: 0;
+    }
+
+    .form-control {
+        flex: 1;
+        height: 38px;
+        outline: none;
+        box-sizing: border-box;
+        margin-right: 20px;
+    }
+
+        .form-control:focus {
+            box-shadow: none;
+        }
+
+    .heading-container {
+        margin: 10px;
+        background-color: #e0e0e0;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .heading-container h4 {
+            color: black;
+            padding: 5px;
+            margin: 0;
+        }
+
+    .signature-pad {
+        width: 100%;
+        max-width: 100%;
+        border: 1px solid #add8e6;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+        .signature-pad canvas {
+            width: 100%;
+            height: auto;
+            box-sizing: border-box;
+        }
+
+    .btnEraseRetake {
+        width: 30%;
+        max-width: 200px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 4px;
+        cursor: pointer;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .capture-container {
+        width: 100%;
+        max-width: 100%;
+        height: 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid grey;
+        margin-top: 0px;
+        box-sizing: border-box;
+        border: 1px solid #add8e6;
+    }
+
+    .camera-icon {
+        font-size: 150px;
+    }
+
+    #btnSubmit {
+        width: 50%;
+        background-color: #8B4513;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-bottom: 25px;
+    }
+
+</style>
+
+<div class="text-center mt-3">
+    <h1><b>ORDER BOOKING FORM</b></h1>
+</div>
+
+<div class="mt-3" style="margin-left:10px;">
+    <span style="font-size: 17px;">
+        Dear Customer, Thank you for booking your next vehicle with POPULAR VEHICLES.<br />
+        Please check the below details and CONFIRM your booking.
+    </span>
+</div>
+
+<div id="divCustomerDetails">
+    <div class="mt-3 heading-container shadow-sm">
+        <h4 class="mt-2">CUSTOMER DETAILS</h4>
+    </div>
+
+    <div class="form-container mt-3">
+        <div class="form-row">
+            <label class="form-label">CUSTOMER NAME</label>
+            <input type="text" id="txtCustomerName" class="form-control shadow-sm" value="@Model.CustomerName">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">MOBILE NO.</label>
+            <input type="text" id="txtMobileNo" class="form-control shadow-sm" value="@Model.MobileNo">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">OTHER CONTACT NO</label>
+            <input type="text" id="txtOtherContactNo" class="form-control shadow-sm" value="@Model.OtherContactNo">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">E-MAIL</label>
+            <input type="text" id="txtEmail" class="form-control shadow-sm" value="@Model.Email">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">PAN NO.</label>
+            <input type="text" id="txtPanNo" class="form-control shadow-sm" value="@Model.PanCardNo">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">DOB</label>
+            <input type="text" id="txtDob" class="form-control shadow-sm" value="@Model.DOB">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">FATHER/<br />HUSBAND NAME</label>
+            <input type="text" id="txtFatherHusbandName" class="form-control shadow-sm" value="@Model.FatherOrHusbandName">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">ADDRESS</label>
+            <input type="text" id="txtAddress" class="form-control shadow-sm" value="@Model.Address">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">PIN CODE</label>
+            <input type="text" id="txtPinCode" class="form-control shadow-sm" value="@Model.PinCode">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">VILLAGE</label>
+            <input type="text" id="txtVillage" class="form-control shadow-sm" value="@Model.Village">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">CITY</label>
+            <input type="text" id="txtCity" class="form-control shadow-sm" value="@Model.City">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">TEHSIL</label>
+            <input type="text" id="txtTehsil" class="form-control shadow-sm" value="@Model.Taluk">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">DISTRICT</label>
+            <input type="text" id="txtDistrict" class="form-control shadow-sm" value="@Model.District">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">STATE</label>
+            <input type="text" id="txtState" class="form-control shadow-sm" value="@Model.State">
+        </div>
+    </div>
+</div>
+
+<div id="divBookedVehicleDetails">
+    <div class="mt-3 heading-container shadow-sm">
+        <h4 class="mt-2">BOOKED VEHICLE DETAILS</h4>
+    </div>
+
+    <div class="form-container mt-3">
+        <div class="form-row">
+            <label class="form-label">DMS OBF NO.</label>
+            <input type="text" id="txtDmsObfNo" class="form-control shadow-sm" value="@Model.DmsObfNo">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">BOOKING DATE</label>
+            <input type="text" id="txtBookingDate" class="form-control shadow-sm" value="@Model.BookingDate">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">BOOKED MODEL</label>
+            <input type="text" id="txtBookedModel" class="form-control shadow-sm" value="@Model.Model">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">BOOKED VARIANT</label>
+            <input type="text" id="txtBookedVariant" class="form-control shadow-sm" value="@Model.Variant">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">COLOR</label>
+            <input type="text" id="txtColor" class="form-control shadow-sm" value="@Model.Color">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">TENTATIVE WAITING PERIOD</label>
+            <input type="text" id="txtTentativeWaitingPeriod" class="form-control shadow-sm" value="@Model.TentativeWaitPeriod">
+        </div>
+
+    </div>
+</div>
+
+<div id="divCostVehicleDetails">
+    <div class="mt-3 heading-container shadow-sm">
+        <h4 class="mt-2">COST OF VEHICLE</h4>
+    </div>
+
+    <div class="form-container mt-3">
+        <div class="form-row">
+            <label class="form-label">EX- SHOWROOM PRICE</label>
+            <input type="text" id="txtExShowroomPrice" class="form-control shadow-sm" value="@Model.ExShowroomPrice">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">REGISTRATION CHARGES</label>
+            <input type="text" id="txtRegistrationCharges" class="form-control shadow-sm" value="@Model.RegistrationCharges">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">TEMP. REG CHARGES</label>
+            <input type="text" id="txtTempRegCharges" class="form-control shadow-sm" value="@Model.TempRegCharges">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">INSURANCE PRICE</label>
+            <input type="text" id="txtInsurancePrice" class="form-control shadow-sm" value="@Model.InsurancePrice">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">EW (OPTIONAL)</label>
+            <input type="text" id="txtEw" class="form-control shadow-sm" value="@Model.EwOptional">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">ACCESSORIES</label>
+            <input type="text" id="txtAccessories" class="form-control shadow-sm" value="@Model.Accessories">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">OTHERS (IF ANY)</label>
+            <input type="text" id="txtOtherIfAny" class="form-control shadow-sm" value="@Model.OthersIfAny">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">OTHERS DESCRIBE</label>
+            <input type="text" id="txtOthersDescribe" class="form-control shadow-sm" value="@Model.OthersDescribe">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">DISCOUNT</label>
+            <input type="text" id="txtDiscount" class="form-control shadow-sm" value="@Model.Discount">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">CGST @@ 14%</label>
+            <input type="text" id="txtCgst" class="form-control shadow-sm" value="@Model.CGST14Percent">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">SGST @@ 14% E</label>
+            <input type="text" id="txtSgst" class="form-control shadow-sm" value="@Model.SGST14Percent">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">CESS @@ 1%</label>
+            <input type="text" id="txtCess" class="form-control shadow-sm" value="@Model.CESS1Percent">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">ON ROAD PRICE</label>
+            <input type="text" id="txtOnRoadPrice" class="form-control shadow-sm" value="@Model.OnRoadPrice">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">BOOKING AMOUNT</label>
+            <input type="text" id="txtBookingAmount" class="form-control shadow-sm" value="@Model.Amount">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">PAYMENT MODE</label>
+            <input type="text" id="txtPaymentMode" class="form-control shadow-sm" value="@Model.PaymentMode">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">PAYMENT REFERENCE</label>
+            <input type="text" id="txtPaymentReference" class="form-control shadow-sm" value="@Model.PaymentReference">
+        </div>
+    </div>
+</div>
+
+<div id="divOtherDetails">
+    <div class="mt-3 heading-container shadow-sm">
+        <h4 class="mt-2">OTHER DETAILS</h4>
+    </div>
+
+    <div class="form-container mt-3">
+        <div class="form-row">
+            <label class="form-label">EXCHANGE</label>
+            <input type="text" id="txtExchange" class="form-control shadow-sm" value="@Model.Exchangestatus">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">EXISTING CAR MODEL</label>
+            <input type="text" id="txtExistingCarModel" class="form-control shadow-sm" value="@Model.ExistingCarModel">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">REGISTRATION NUMBER</label>
+            <input type="text" id="txtRegistrationNo" class="form-control shadow-sm" value="@Model.RegistrationNo">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">MSIL LISTED CORPORATE</label>
+            <input type="text" id="txtMsilListedCorporate" class="form-control shadow-sm" value="@Model.MSILListedCorporate">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">CORPORATE NAME</label>
+            <input type="text" id="txtCorporateName" class="form-control shadow-sm" value="@Model.CorporateName">
+        </div>
+
+        <div class="form-row">
+            <label class="form-label">FINANCE AVAILED</label>
+            <input type="text" id="txtFinanceAvailed" class="form-control shadow-sm" value="@Model.Finance">
+        </div>
+    </div>
+</div>
+
+<div class="mt-5" style="margin-left:10px;">
+    <span style="font-size: 17px;">
+        We hereby give our unconditional consent to be contacted by Maruti Suzuki and /its business associates in relation to the products and services of Maruti Suzuki India Limited by means including but not limited to my telephone /Mobile Phone/E-mail/SMS.<br />
+        I hereby give my unconditional consent to MSIL to use itself or disclose the data collected by MSIL with its Parent Company and/ or business associates for the purpose of carrying out the essential business functions like business and market development, building and managing external relationships, ensuring data protecion and seamless provision of services, research and development, technology infrastructure and such other purpose as required by law or regulation. I/We acknowledge that Welcome docket has been provided to me. All Pay Order /Demand Draft should be in favor of [Dealership name] payable at [City Name)
+
+    </span>
+</div>
+
+<div class="mt-5" style="margin-left:10px;margin-right: 10px;">
+    <label class="form-label">PLEASE TYPE YOUR NAME</label>
+    <input type="text" id="txtUserEnteredNamed" class="form-control shadow-sm" style="background-color:#EDEDED;">
+</div>
+
+<div class="mt-4" style="margin-left:10px;margin-right: 10px;">
+    <label class="form-label">PLEASE SIGN IN BELOW BOX</label>
+    <div id="signature-pad" class="signature-pad" style="background-color:#F5F5F5">
+        <canvas id="canvas" width="500" height="400"></canvas>
+    </div>
+    <button id="btnErase" class="shadow-sm btnEraseRetake btn-custom mt-1">ERASE</button>
+</div>
+
+<div class="mt-5" style="margin-left:10px;margin-right:10px;">
+    <label class="form-label">PLEASE OPEN THE CAMERA TAKE YOUR PICTURE (FACE MANDATORY)</label>
+    <div>
+        <input type="file" accept="image/*" capture="camera" id="capture-button" style="display: none;">
+    </div>
+    <div id="divCaptureImage" class="capture-container shadow-sm" style="background-color:#EDEDED;">
+        <label for="capture-button">
+            <a><i class="bi bi-camera-fill camera-icon"></i></a>
+        </label>
+    </div>
+    <button id="btnRetake" class="shadow-sm btnEraseRetake btn-custom mt-1">RETAKE</button>
+</div>
+
+<div class="mt-5 text-center" style="margin-left:10px;margin-right:10px;">
+    <button id="btnSubmit" class="btn btn-custom shadow">SUBMIT</button>
+</div>
+
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script>
+
+        var curLat, curLong;
+        $(document).ready(function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        curLat = position.coords.latitude;
+                        curLong = position.coords.longitude;
+                    }
+                )
+            }
+
+            var errorGettingUserData = '@ViewBag.ErrorGettingData';
+            if(errorGettingUserData != null && errorGettingUserData != ""){
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.options.timeOut = 10000;
+                toastr.warning("Error occured while fetching user Booking data.. Please try again");
+            }
+        });
+
+        // Signature related capture functionalities
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext("2d");
+        var signaturePad = new SignaturePad(canvas);
+
+        var hiddenCanvas = document.createElement('canvas');
+        var hiddenCtx = hiddenCanvas.getContext('2d');
+
+        function resizeCanvas() {
+            var ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            ctx.scale(ratio, ratio);
+
+            signaturePad.clear();
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        document.getElementById('btnErase').addEventListener('click', function () {
+            signaturePad.clear();
+        });
+
+        //Image capture functionalities
+        let capturedImageElement; //variable to store the captured image element
+        let capturedFile; // To store the file object to send to server
+        document.getElementById('capture-button').addEventListener('change', function (event) {
+            clearImage();
+            const file = event.target.files[0];
+            if (file) {
+                capturedFile = file;
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const imageDataURL = event.target.result;
+                    displayCapturedImage(imageDataURL);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function displayCapturedImage(imageDataURL) {
+
+            const image = new Image();
+            image.src = imageDataURL;
+            image.style.maxWidth = '100%';
+            image.style.maxHeight = '100%';
+            image.className = 'camera-preview';
+            image.style.objectFit = 'cover';
+
+            if (capturedImageElement) {
+                capturedImageElement.parentNode.removeChild(capturedImageElement);
+            }
+
+            const displayCapturedImage = document.querySelector('#divCaptureImage');
+            displayCapturedImage.innerHTML = '';
+            displayCapturedImage.appendChild(image);
+            capturedImageElement = image;
+        }
+
+        document.getElementById('btnRetake').addEventListener('click', function () {
+            document.getElementById('capture-button').click();
+        });
+
+        function clearImage() {
+            if (capturedImageElement) {
+                capturedImageElement.parentNode.removeChild(capturedImageElement);
+                capturedImageElement = null;
+            }
+        }
+
+        //Sending request back to server after SUBMIT btn clicked
+        document.getElementById('btnSubmit').addEventListener('click', function () {
+            if (signaturePad.isEmpty()) {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Please provide a signature..');
+            } else if (!capturedFile) {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Please capture an image..');
+            } else {
+                showUploading();
+
+                var signatureData = getSignatureFileWithWatermarks();
+
+                var formData = new FormData();
+                var sbdata = {
+                    CustomerName: $('#txtCustomerName').val(),
+                    MobileNo: $('#txtMobileNo').val(),
+                    OtherContactNo: $('#txtOtherContactNo').val(),
+                    Email: $('#txtEmail').val(),
+                    PanCardNo: $('#txtPanNo').val(),
+                    DOB: $('#txtDob').val(),
+                    FatherOrHusbandName: $('#txtFatherHusbandName').val(),
+                    Address: $('#txtAddress').val(),
+                    PinCode: $('#txtPinCode').val(),
+                    Village: $('#txtVillage').val(),
+                    City: $('#txtCity').val(),
+                    Taluk: $('#txtTehsil').val(),
+                    District: $('#txtDistrict').val(),
+                    State: $('#txtState').val(),
+                    DmsObfNo: $('#txtDmsObfNo').val(),
+                    BookingDate: $('#txtBookingDate').val(),
+                    Model: $('#txtBookedModel').val(),
+                    Variant: $('#txtBookedVariant').val(),
+                    Color: $('#txtColor').val(),
+                    TentativeWaitPeriod: $('#txtTentativeWaitingPeriod').val(),
+                    ExShowroomPrice: $('#txtExShowroomPrice').val(),
+                    RegistrationCharges: $('#txtRegistrationCharges').val(),
+                    TempRegCharges: $('#txtTempRegCharges').val(),
+                    InsurancePrice: $('#txtInsurancePrice').val(),
+                    EwOptional: $('#txtEw').val(),
+                    Accessories: $('#txtAccessories').val(),
+                    OthersIfAny: $('#txtOtherIfAny').val(),
+                    OthersDescribe: $('#txtOthersDescribe').val(),
+                    Discount: $('#txtDiscount').val(),
+                    CGST14Percent: $('#txtCgst').val(),
+                    SGST14Percent: $('#txtSgst').val(),
+                    CESS1Percent: $('#txtCess').val(),
+                    OnRoadPrice: $('#txtOnRoadPrice').val(),
+                    Amount: $('#txtBookingAmount').val(),
+                    PaymentMode: $('#txtPaymentMode').val(),
+                    PaymentReference: $('#txtPaymentReference').val(),
+                    Exchangestatus: $('#txtExchange').val(),
+                    ExistingCarModel: $('#txtExistingCarModel').val(),
+                    RegistrationNo: $('#txtRegistrationNo').val(),
+                    MSILListedCorporate: $('#txtMsilListedCorporate').val(),
+                    CorporateName: $('#txtCorporateName').val(),
+                    Finance: $('#txtFinanceAvailed').val(),
+                    UserEnteredName: $('#txtUserEnteredNamed').val()
+                }
+
+                formData.append('custSignature', signatureData);
+                formData.append('custImageFile', capturedFile);
+                formData.append('confirmBookData', JSON.stringify(sbdata));
+
+                $.ajax({
+                    type: "POST",
+                    url: '/OrderBookingForm/SubmitOrderBookingForm',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        hideUploading();
+                        if(response.success == true){
+                            window.location.href = '@Url.Action("Index", "Home", new{ submit = "1"})';
+                            toastr.options.positionClass = 'toast-bottom-right';
+                            toastr.options.timeOut = 10000;
+                            toastr.success('Order Booking Form Confirmation Submitted Successfully.');
+                        }
+                        else{
+                            toastr.options.positionClass = 'toast-bottom-right';
+                            toastr.options.timeOut = 10000;
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function (error) {
+                        hideUploading();
+                        toastr.options.positionClass = 'toast-bottom-right';
+                        toastr.options.timeOut = 10000;
+                        toastr.error('An error occurred while saving. Please try again.');
+                    }
+                });
+            }
+        });
+
+        function getSignatureFileWithWatermarks() {
+            hiddenCanvas.width = canvas.width;
+            hiddenCanvas.height = canvas.height + 65;
+            hiddenCtx.clearRect(0, 0, hiddenCanvas.width, hiddenCanvas.height);
+            hiddenCtx.drawImage(canvas, 0, 0);
+
+            const currentDate = new Date();
+            const day = String(currentDate.getDate()).padStart(2, '0');
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+            const year = currentDate.getFullYear();
+            let hours = currentDate.getHours();
+            const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+            const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+
+            const strTime = `${hours}:${minutes}:${seconds} ${ampm}`;
+            const dateString = `${day}/${month}/${year}, ${strTime}`;
+            var lati;
+            var longi;
+            if (curLat !== null && curLat !== "" && curLat !== undefined && curLong !== null && curLong !== "" && curLong !== undefined) {
+                lati = `Latitude: ${curLat}`;
+                longi = `Longitude: ${curLong}`;
+            } else {
+                lati = "Latitude: 0.0";
+                longi = "Longitude: 0.0";
+            }
+
+            const textHeight = 20;
+            const watermarkX = 10;
+            const watermarkY = canvas.height + 20;
+
+            hiddenCtx.font = '13px Arial';
+            hiddenCtx.fillStyle = 'white';
+            hiddenCtx.strokeStyle = 'black';
+            hiddenCtx.lineWidth = 2;
+
+            hiddenCtx.strokeText(dateString, watermarkX, watermarkY);
+            hiddenCtx.fillText(dateString, watermarkX, watermarkY);
+            hiddenCtx.strokeText(lati, watermarkX, watermarkY + textHeight);
+            hiddenCtx.fillText(lati, watermarkX, watermarkY + textHeight);
+            hiddenCtx.strokeText(longi, watermarkX, watermarkY + textHeight * 2);
+            hiddenCtx.fillText(longi, watermarkX, watermarkY + textHeight * 2);
+
+            var signedFile = hiddenCanvas.toDataURL('image/png');
+
+            return signedFile;
+        }
+
+        var uploadingToast;
+        function showUploading() {
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.options.timeOut = 0;
+            toastr.info('Please wait your Confirm Order Booking Form is submitting..!');
+        }
+
+        function hideUploading() {
+            toastr.clear(uploadingToast);
+            uploadingToast = toastr.options.timeOut = 5000;
+        }
+
+    </script>
+}

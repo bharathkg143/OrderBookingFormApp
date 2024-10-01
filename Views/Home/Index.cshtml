@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Phone Number";
+}
+
+<style>
+    #btnGetOtp {
+        background-color: #8B4513;
+        color: white;
+    }
+</style>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center text-center">
+        <div class="col-12">
+            <h4>
+                Thank you for choosing Popular Vehicles for your New Car.<br>
+                Please enter your Mobile Number to receive an OTP.
+            </h4>
+        </div>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-10 col-md-6">
+            <input type="text" id="inpPhnNo" name="phnNumber" class="form-control shadow-sm" />
+        </div>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-6 col-md-4 d-flex justify-content-center">
+            <button id="btnGetOtp" class="btn btn-custom shadow-sm w-100"><b>GET OTP</b></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            var message = '@ViewBag.Message';
+            var status = '@ViewBag.Status';
+
+            if (status === "Error") {
+                $('#btnGetOtp').prop('disabled', true);
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.options.timeOut = 10000;
+                toastr.error(message);
+            }
+        });
+
+
+        $('#btnGetOtp').click(function () {
+            var phoneNumber = $('#inpPhnNo').val();
+            if (phoneNumber == "") {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Please enter your Registered Mobile Number..!');
+            }
+            else if (phoneNumber.length != 10 && phoneNumber.length != 13) {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Please enter valid Registered Mobile Number..!');
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("PhoneNumber", "Home")",
+                    data: { phnNumber: phoneNumber },
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.success == true) {
+                            window.location.href = '@Url.Action("EnterOTP","Home")';
+                        }
+
+                        if(response.success == false){
+                            toastr.options.positionClass = 'toast-bottom-right';
+                            toastr.warning(response.message);
+                        }
+                    }
+                    // error: function (xhr, status, error) {
+                    //     console.error("An error occurred: " + error);
+                    // }
+                });
+            }
+
+        });
+    </script>
+}

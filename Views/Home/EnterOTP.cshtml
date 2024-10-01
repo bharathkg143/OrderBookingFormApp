@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewData["Title"] = "EnterOTP";
+}
+
+<style>
+    #btnSubmit {
+        background-color: #8B4513;
+        color: white;
+        width: 300px;
+    }
+
+    #btnBack{
+        background-color: #00008B;
+        color: white;
+        width: 300px;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    @@media (min-width: 768px) {
+        /* For medium devices like tablets */
+        .button-container {
+            justify-content: space-evenly;
+        }
+    }
+
+    @@media (min-width: 1024px) {
+        /* For large screens like iPads tablets */
+        .button-container {
+            gap: 10px;
+            justify-content: center;
+        }
+
+        #btnSubmit, #btnBack {
+            width: 250px; /* Reduce width on larger screens */
+        }
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row text-center">
+        <h4>
+            <b>Enter One Time Password for @TempData["MaskedPhoneNumber"]</b>
+        </h4>
+    </div>
+
+    <div class="row justify-content-center mt-4">
+        <input type="number" id="inpOtp" name="input1" class="form-control shadow-sm" style="width:250px;border:solid black 2px" placeholder="Enter OTP" />
+    </div>
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-8 col-md-6 col-lg-4 button-container">
+            <a id="btnBack" asp-action="Index" asp-controller="Home" class="btn btn-custom m-2 shadow-sm"><b>Back</b></a>
+            <button id="btnSubmit" class="btn btn-custom m-2 shadow-sm"><b>Submit</b></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('#btnSubmit').click(function () {
+            var enteredOtp = $('#inpOtp').val();
+            if (enteredOtp == "" || enteredOtp == null) {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Please enter the otp send to your registered mobile number..!');
+            }
+            else {
+                $.ajax({
+                    type:'POST',
+                    url: '@Url.Action("ValidateOTP", "Home")',
+                    data: { otp : enteredOtp},
+                    dataType:'json',
+                    success:function(response){
+                        if (response.success == true) {
+                            window.location.href = "@Url.Action("OrderBookingForm", "OrderBookingForm")";
+                        }
+                        else {
+                            toastr.options.positionClass = 'toast-bottom-right';
+                            toastr.error(response.message);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+}
