@@ -471,7 +471,7 @@ namespace OrderBookingFormApp.Controllers
             </div>
             <div style=""width: 50%; padding-left: 10px;"">
                 <label style=""display: block; font-weight: bold;margin-bottom:10px;"">PHOTO:</label>
-                <img style=""border: 2px solid #ADD8E6; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); width: 100%; height: auto;"" src=""{customerPhoto}"">
+                <img style=""border: 2px solid #ADD8E6; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); width: 100%; height: auto;max-height:240px;"" src=""{customerPhoto}"">
             </div>
         </div>
     </div>

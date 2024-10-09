@@ -498,19 +498,117 @@
         }
 
         //Sending request back to server after SUBMIT btn clicked
+        // document.getElementById('btnSubmit').addEventListener('click', function () {
+        //     if (signaturePad.isEmpty()) {
+        //         toastr.options.positionClass = 'toast-bottom-right';
+        //         toastr.warning('Please provide a signature..');
+        //     } else if (!capturedFile) {
+        //         toastr.options.positionClass = 'toast-bottom-right';
+        //         toastr.warning('Please capture an image..');
+        //     } else {
+        //         showUploading();
+
+        //         var signatureData = getSignatureFileWithWatermarks();
+
+        //         var formData = new FormData();
+        //         var sbdata = {
+        //             CustomerName: $('#txtCustomerName').val(),
+        //             MobileNo: $('#txtMobileNo').val(),
+        //             OtherContactNo: $('#txtOtherContactNo').val(),
+        //             Email: $('#txtEmail').val(),
+        //             PanCardNo: $('#txtPanNo').val(),
+        //             DOB: $('#txtDob').val(),
+        //             FatherOrHusbandName: $('#txtFatherHusbandName').val(),
+        //             Address: $('#txtAddress').val(),
+        //             PinCode: $('#txtPinCode').val(),
+        //             Village: $('#txtVillage').val(),
+        //             City: $('#txtCity').val(),
+        //             Taluk: $('#txtTehsil').val(),
+        //             District: $('#txtDistrict').val(),
+        //             State: $('#txtState').val(),
+        //             DmsObfNo: $('#txtDmsObfNo').val(),
+        //             BookingDate: $('#txtBookingDate').val(),
+        //             Model: $('#txtBookedModel').val(),
+        //             Variant: $('#txtBookedVariant').val(),
+        //             Color: $('#txtColor').val(),
+        //             TentativeWaitPeriod: $('#txtTentativeWaitingPeriod').val(),
+        //             ExShowroomPrice: $('#txtExShowroomPrice').val(),
+        //             RegistrationCharges: $('#txtRegistrationCharges').val(),
+        //             TempRegCharges: $('#txtTempRegCharges').val(),
+        //             InsurancePrice: $('#txtInsurancePrice').val(),
+        //             EwOptional: $('#txtEw').val(),
+        //             Accessories: $('#txtAccessories').val(),
+        //             OthersIfAny: $('#txtOtherIfAny').val(),
+        //             OthersDescribe: $('#txtOthersDescribe').val(),
+        //             Discount: $('#txtDiscount').val(),
+        //             CGST14Percent: $('#txtCgst').val(),
+        //             SGST14Percent: $('#txtSgst').val(),
+        //             CESS1Percent: $('#txtCess').val(),
+        //             OnRoadPrice: $('#txtOnRoadPrice').val(),
+        //             Amount: $('#txtBookingAmount').val(),
+        //             PaymentMode: $('#txtPaymentMode').val(),
+        //             PaymentReference: $('#txtPaymentReference').val(),
+        //             Exchangestatus: $('#txtExchange').val(),
+        //             ExistingCarModel: $('#txtExistingCarModel').val(),
+        //             RegistrationNo: $('#txtRegistrationNo').val(),
+        //             MSILListedCorporate: $('#txtMsilListedCorporate').val(),
+        //             CorporateName: $('#txtCorporateName').val(),
+        //             Finance: $('#txtFinanceAvailed').val(),
+        //             UserEnteredName: $('#txtUserEnteredNamed').val()
+        //         }
+
+        //         formData.append('custSignature', signatureData);
+        //         formData.append('custImageFile', capturedFile);
+        //         formData.append('confirmBookData', JSON.stringify(sbdata));
+
+        //         $.ajax({
+        //             type: "POST",
+        //             url: '/OrderBookingForm/SubmitOrderBookingForm',
+        //             data: formData,
+        //             contentType: false,
+        //             processData: false,
+        //             success: function (response) {
+        //                 hideUploading();
+        //                 if(response.success == true){
+        //                     window.location.href = '@Url.Action("Index", "Home", new{ submit = "1"})';
+        //                     toastr.options.positionClass = 'toast-bottom-right';
+        //                     toastr.options.timeOut = 10000;
+        //                     toastr.success('Order Booking Form Confirmation Submitted Successfully.');
+        //                 }
+        //                 else{
+        //                     toastr.options.positionClass = 'toast-bottom-right';
+        //                     toastr.options.timeOut = 10000;
+        //                     toastr.error(response.message);
+        //                 }
+        //             },
+        //             error: function (error) {
+        //                 hideUploading();
+        //                 toastr.options.positionClass = 'toast-bottom-right';
+        //                 toastr.options.timeOut = 10000;
+        //                 toastr.error('An error occurred while saving. Please try again.');
+        //             }
+        //         });
+        //     }
+        // });
+
         document.getElementById('btnSubmit').addEventListener('click', function () {
             if (signaturePad.isEmpty()) {
-                toastr.options.positionClass = 'toast-bottom-right';
-                toastr.warning('Please provide a signature..');
+                toastr.warning('Please provide a signature.');
             } else if (!capturedFile) {
-                toastr.options.positionClass = 'toast-bottom-right';
-                toastr.warning('Please capture an image..');
+                toastr.warning('Please capture an image.');
             } else {
+                uploadFormData();
+            }
+        });
+
+        async function uploadFormData() {
+            try {
                 showUploading();
+
+                var formData = new FormData();
 
                 var signatureData = getSignatureFileWithWatermarks();
 
-                var formData = new FormData();
                 var sbdata = {
                     CustomerName: $('#txtCustomerName').val(),
                     MobileNo: $('#txtMobileNo').val(),
@@ -561,35 +659,32 @@
                 formData.append('custImageFile', capturedFile);
                 formData.append('confirmBookData', JSON.stringify(sbdata));
 
-                $.ajax({
+                const response = await $.ajax({
                     type: "POST",
                     url: '/OrderBookingForm/SubmitOrderBookingForm',
                     data: formData,
                     contentType: false,
-                    processData: false,
-                    success: function (response) {
-                        hideUploading();
-                        if(response.success == true){
-                            window.location.href = '@Url.Action("Index", "Home", new{ submit = "1"})';
-                            toastr.options.positionClass = 'toast-bottom-right';
-                            toastr.options.timeOut = 10000;
-                            toastr.success('Order Booking Form Confirmation Submitted Successfully.');
-                        }
-                        else{
-                            toastr.options.positionClass = 'toast-bottom-right';
-                            toastr.options.timeOut = 10000;
-                            toastr.error(response.message);
-                        }
-                    },
-                    error: function (error) {
-                        hideUploading();
-                        toastr.options.positionClass = 'toast-bottom-right';
-                        toastr.options.timeOut = 10000;
-                        toastr.error('An error occurred while saving. Please try again.');
-                    }
+                    processData: false
                 });
+
+                hideUploading();
+                if (response.success) {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.options.timeOut = 10000;
+                    toastr.success('Order Booking Form Confirmation Submitted Successfully.');
+                    window.location.href = '@Url.Action("Index", "Home", new{ submit = 1})';
+                } else {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.options.timeOut = 10000;
+                    toastr.error(response.message);
+                }
+            } catch (error) {
+                hideUploading();
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.options.timeOut = 10000;
+                toastr.error('An error occurred while saving. Please try again.');
             }
-        });
+        }
 
         function getSignatureFileWithWatermarks() {
             hiddenCanvas.width = canvas.width;
